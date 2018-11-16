@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title> Github Auth Token </title>
+</head>
+<body>
+<p id="response"></p>
+<label for="username" id="usernameLabel">Github username: </label><input type="text" id="username"><br>
+<label for="password" id="passwordLabel">Github password: </label><input type="password" id="password"><br>
+<label for="auth">Github 2Fact Auth code: </label><input type="text" id="auth"><br>
+<button id="authButton" onclick="get()">Authenticate</button>
+<button id="delButton" onclick="del()" hidden>Delete token</button>
+<script>
+    var token = "";
+    var id = "";
+
+    function get() {
+        var d = new Date();
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("POST", "https://api.github.com/authorizations", false);
+        xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(document.getElementById("username").value + ":" + document.getElementById("password").value));
+        xmlHttp.setRequestHeader("X-GitHub-OTP", document.getElementById("auth").value);
+        xmlHttp.send('{"scopes": ["repo"],"note": "' + d.getTime() + '"}');
+        var json = JSON.parse(xmlHttp.response);
+        token = json['token'];
+        id = json['id'];
+        document.getElementById("response").innerHTML = token;
+        document.getElementById("username").hidden = true;
+        document.getElementById("password").hidden = true;
+        document.getElementById("usernameLabel").hidden = true;
+        document.getElementById("passwordLabel").hidden = true;
+        document.getElementById("authButton").hidden = true;
+        document.getElementById("delButton").hidden = false;
+    }
+
+    function del(){
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("DELETE", "https://api.github.com/authorizations/" + id, false);
+        xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(document.getElementById("username").value + ":" + document.getElementById("password").value));
+        xmlHttp.setRequestHeader("X-GitHub-OTP", document.getElementById("auth").value);
+        xmlHttp.send(null);
+        document.getElementById("response").innerHTML = "";
+        document.getElementById("username").hidden = false;
+        document.getElementById("password").hidden = false;
+        document.getElementById("usernameLabel").hidden = false;
+        document.getElementById("passwordLabel").hidden = false;
+        document.getElementById("authButton").hidden = false;
+        document.getElementById("delButton").hidden = true;
+    }
+</script>
+</body>
+</html>
