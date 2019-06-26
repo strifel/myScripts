@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+echo "Welcome to Apache Config creator"
+echo ""
+echo "Your fallback directory should be /var/www/ip"
+echo "The domain should not exists"
+echo "certbot should be installed"
+echo ""
+echo "Enter Full Domain: "
+read domain
+echo "Enter folder: "
+read folder
+
+certbot certonly --webroot -w /var/www/ip -d ${domain}
+
+echo "<VirtualHost $domain:80>
+    ServerName $domain
+    DocumentRoot /var/www/$folder/
+    <Directory /var/www/$folder/>
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+    Redirect permanent / https://$domain/
+</VirtualHost>
+<VirtualHost $domain:443>
+        ServerName $domain
+        DocumentRoot /var/www/$folder/
+        <Directory /var/www/$folder/>
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+        ErrorLog /var/log/apache2/error.log
+        LogLevel warn
+        CustomLog /var/log/apache2/access.log combined
+        ServerSignature On
+        SSLEngine on
+        SSLCertificateFile \"/etc/letsencrypt/live/$domain/cert.pem\"
+        SSLCertificateKeyFile \"/etc/letsencrypt/live/$domain/privkey.pem\"
+</VirtualHost>" > /etc/apache2/sites-available/${folder}.conf
+
+a2ensite "$folder.conf"
+service apache2 restart
+
+echo "Site should be there! https://$domain/"
