@@ -2,16 +2,14 @@
 
 echo "Welcome to Apache Config creator"
 echo ""
-echo "Your fallback directory should be /var/www/ip"
-echo "The domain should not exists"
-echo "certbot should be installed"
+echo "certbot has to be installed"
 echo ""
 echo "Enter Full Domain: "
 read domain
 echo "Enter folder: "
 read folder
 
-certbot certonly --webroot -w /var/www/ip -d ${domain}
+certbot certonly --apache -d ${domain}
 
 echo "<VirtualHost $domain:80>
     ServerName $domain
