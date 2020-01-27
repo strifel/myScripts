@@ -7,4 +7,5 @@ Some scripts I use.
 4. simpleGetAPIwithOutput: Returnes your request in json and prints it to console. (Uses express in js)
 5. modlister: Just lists .jar files in directory
 6. github_auth: Get Auth Token from github with two factor code
-7. raspiMonOut: Turn of your Raspberrypi Monitor automatically
+7. apache/a2cr: Create a new Virtual Host File for Apache and automatically get a lets encrypt certificate
+8. raspiMonOut: Turn of your Raspberrypi Monitor automatically
