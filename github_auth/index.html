@@ -1,14 +1,17 @@
 <html>
 <head>
     <title> Github Auth Token </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<p id="response"></p>
-<label for="username" id="usernameLabel">Github username: </label><input type="text" id="username"><br>
-<label for="password" id="passwordLabel">Github password: </label><input type="password" id="password"><br>
-<label for="auth">Github 2Fact Auth code: </label><input type="text" id="auth"><br>
-<button id="authButton" onclick="get()">Authenticate</button>
-<button id="delButton" onclick="del()" hidden>Delete token</button>
+<div id="inner">
+    <p id="response"></p>
+    <label for="username" id="usernameLabel">Github username: </label><input class="form-control" type="text" id="username"><br>
+    <label for="password" id="passwordLabel">Github password: </label><input class="form-control" type="password" id="password"><br>
+    <label for="auth">Github 2Fact Auth code: </label><input type="text" id="auth" class="form-control"><br>
+    <button id="authButton" class="btn btn-primary" onclick="get()">Authenticate</button>
+    <button id="delButton" class="btn btn-danger" onclick="del()" hidden>Delete token</button>
+</div>
 <script>
     var token = "";
     var id = "";
@@ -47,5 +50,10 @@
         document.getElementById("delButton").hidden = true;
     }
 </script>
+<style>
+    #inner {
+        margin: 20px;
+    }
+</style>
 </body>
 </html>
