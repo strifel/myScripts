@@ -9,3 +9,4 @@ Some scripts I use.
 6. github_auth: Get Auth Token from github with two factor code
 7. apache/a2cr: Create a new Virtual Host File for Apache and automatically get a lets encrypt certificate
 8. raspiMonOut: Turn of your Raspberrypi Monitor automatically
+9. archiver: Easy way to archive multiple Github Repos (For single have a look at [GHRepoNameFiller](https://github.com/strifel/GHRepoNameFiller))
